@@ -22,3 +22,7 @@ Route::get('/login', function () {
 Route::get('/cadastro', function () {
     return view('cadastro');
 });
+
+Route::get('/cadastro-recurso', function () {
+    return view('cadastro-recurso');
+});
