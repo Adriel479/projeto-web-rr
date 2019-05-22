@@ -19,8 +19,8 @@ Route::get('/login', function () {
     return view('login');
 });
 
-Route::get('/cadastro', function () {
-    return view('cadastro');
+Route::get('/cadastro-cliente', function () {
+    return view('cadastro-cliente');
 });
 
 Route::get('/cadastro-recurso', function () {
