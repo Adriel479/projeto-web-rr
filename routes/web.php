@@ -26,3 +26,15 @@ Route::get('/cadastro-cliente', function () {
 Route::get('/cadastro-recurso', function () {
     return view('cadastro-recurso');
 });
+
+Route::get('/gerenciar-recurso', function () {
+    return view('gerenciar-recurso');
+});
+
+Route::get('/listar-recurso', function () {
+    return view('listar-recurso');
+});
+
+Route::get('/reservar-recurso', function () {
+    return view('reservar-recurso');
+});
