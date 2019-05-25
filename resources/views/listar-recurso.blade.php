@@ -12,11 +12,16 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <a class="navbar-brand" href="{{url('/')}}">RR - System </a>
             <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" href="{{url('/cadastro-recurso')}}">Cadastrar Recurso</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{url('/gerenciar-recurso')}}">Gerenciar Recursos</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{url('/listar-recurso')}}">Listar Recursos</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{url('/')}}">Gerenciar Administradores</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{url('/')}}">Sair</a></li>
+                <?php 
+                    $sessao = session()->get('login');
+                    if (session()->has('login') && session()->get('login')['tipo'] == 'A') {
+                        echo "<li class='nav-item'><a class='nav-link' href='/cadastro-recurso'>Cadastrar Recurso</a></li>";
+                        echo "<li class='nav-item'><a class='nav-link' href='/gerenciar-recurso'>Gerenciar Recursos</a></li>";
+                        echo "<li class='nav-item'><a class='nav-link' href=''>Gerenciar Administradores</a></li>";
+                    }
+                    echo "<li class='nav-item'><a class='nav-link' href='/listar-recurso'>Listar Recursos</a></li>";
+                    echo "<li class='nav-item'><a class='nav-link' href='/sair'>Sair</a></li>";
+                ?>
             </ul>
         </nav>
 
@@ -29,12 +34,9 @@
                 <th>Nome</th>
                 <th>Descrição</th>
                 <th>Data</th>
-                <tr>
-                    <td>Eu sou uma linha</td>
-                    <td>Eu sou uma linha</td>
-                    <td>Eu sou uma linha</td>
-                    <td>Eu sou uma linha</td>
-                </tr>
+                <?php
+                
+                ?>
             </table>
        </section>
 
@@ -48,13 +50,18 @@
                 <th>Descrição</th>
                 <th>Quantidade</th>
                 <th>Reservar</th>
-                <tr>
-                    <td>Eu sou uma linha</td>
-                    <td>Eu sou uma linha</td>
-                    <td>Eu sou uma linha</td>
-                    <td>Eu sou uma linha</td>
-                    <td><form action="" method="post" class="btn-"><input type="submit" class="btn btn-success" value="Reservar"></form></td>
-                </tr>
+                <?php
+                  //  var_dump(session()->get('lista_de_recursos'));
+                    foreach($lista_recurso as $itens) {
+                        echo '<tr>';
+                            echo '<td>' . $itens['id_recurso'] . '</td>';
+                            echo '<td>' . $itens['nome_recurso'] . '</td>';
+                            echo '<td>' . $itens['descricao_recurso'] . '</td>';
+                            echo '<td>' . $itens['quantidade_recurso'] . '</td>';
+                            echo "<td><form action='/reservar-recurso' method='post'><input hidden name='id_recurso' value=" . $itens['id_recurso'] .  "><input type='submit' class='btn btn-success' value='Reserva'/></form></td>";
+                        echo '</tr>';
+                    }
+                ?>
             </table>
        </section>
     </body>

@@ -18,14 +18,20 @@
         </nav>
         <section class="container">
             <header>
+                <?php 
+                    if (session()->has('falha_login')) {
+                        echo "<p class='alert alert-danger'>" . session('falha_login') . "</p>";
+                    }
+                ?>
                 <h1>Login</h1>
                 <p>Seja bem-vindo ao sistema de reserva de recursos acesse o sistema com seu login e senha!</p>
             </header>
-            <form action="" method="">
+            <form action="/autenticar-usuario" method="post">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
                 <label>Usuário:</label>
-                <input type="text" class="form-control" name="login" placeholder="Usuário"/>
+                <input type="text" class="form-control" name="login_usuario" placeholder="Usuário"/>
                 <label>Senha:</label>
-                <input type="password" class="form-control" name="senha" placeholder="Senha"/><br/>
+                <input type="password" class="form-control" name="senha_usuario" placeholder="Senha"/><br/>
                 <input type="submit" class="btn btn-success form-control" value="Entrar"/><br/>
             </form> 
        </section>

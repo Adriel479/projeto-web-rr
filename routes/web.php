@@ -12,6 +12,9 @@
 */
 
 use App\Usuario;
+use App\Mensagem;
+use App\Recurso;
+use App\Reserva;
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,28 +29,43 @@ Route::get('/cadastro-cliente', function () {
 });
 
 Route::get('/cadastro-recurso', function () {
-    return view('cadastro-recurso');
+    if (session()->has('login') && session()->get('login')['tipo'] == 'A')
+        return view('cadastro-recurso');
+    else
+        return view('aviso');
 });
 
 Route::get('/gerenciar-recurso', function () {
-    return view('gerenciar-recurso');
+    if (session()->has('login') && session()->get('login')['tipo'] == 'A')
+        return view('gerenciar-recurso');
+    else
+        return view('aviso');
 });
 
 Route::get('/listar-recurso', function () {
-    return view('listar-recurso');
+    if (session()->has('login')) {
+        $lista_recursos = Recurso::all();
+       // $lista_reservas = Reserva::where('id_usuario', session()->get('login')['id_usuario']);
+        return view('listar-recurso', ['lista_recurso'=>$lista_recursos]);
+    } else {
+        return redirect('login')->with('falha_login', Mensagem::acessoNaoPermitido());
+    }
 });
 
 Route::get('/reservar-recurso', function () {
-    return view('reservar-recurso');
+    if (session()->has('login'))
+        return view('reservar-recurso');
+    else
+        return view('aviso');
+});
+
+Route::get('/sair', function() {
+    session()->flush();
+    return redirect('/login');
 });
 
 Route::post("/inserir-usuario", "UsuarioController@cadastrarUsuario");
 
-Route::get('/teste', function () {
-            $usuario = new Usuario;
-            $usuario->nome = 'Teste';
-            $usuario->login = 'Teste';
-            $usuario->senha = 'Teste';
-            $usuario->tipo = 'C';
-            $usuario->save();
-});
+Route::post("/inserir-recurso", "RecursoController@cadastrarRecurso");
+
+Route::post("/autenticar-usuario", "LoginController@autenticarUsuario");

@@ -12,11 +12,16 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <a class="navbar-brand" href="{{url('/')}}">RR - System </a>
             <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" href="{{url('/cadastro-recurso')}}">Cadastrar Recurso</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{url('/gerenciar-recurso')}}">Gerenciar Recursos</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{url('/listar-recurso')}}">Listar Recursos</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{url('/')}}">Gerenciar Administradores</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{url('/')}}">Sair</a></li>
+            <?php 
+                    $sessao = session()->get('login');
+                    if (session()->has('login') && session()->get('login')['tipo'] == 'A') {
+                        echo "<li class='nav-item'><a class='nav-link' href='/cadastro-recurso'>Cadastrar Recurso</a></li>";
+                        echo "<li class='nav-item'><a class='nav-link' href='/gerenciar-recurso'>Gerenciar Recursos</a></li>";
+                        echo "<li class='nav-item'><a class='nav-link' href=''>Gerenciar Administradores</a></li>";
+                    }
+                    echo "<li class='nav-item'><a class='nav-link' href='/listar-recurso'>Listar Recursos</a></li>";
+                    echo "<li class='nav-item'><a class='nav-link' href='/sair'>Sair</a></li>";
+                ?>
             </ul>
         </nav>
        <section class="container">
