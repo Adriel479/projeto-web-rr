@@ -11,6 +11,8 @@
 |
 */
 
+use App\Usuario;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -37,4 +39,15 @@ Route::get('/listar-recurso', function () {
 
 Route::get('/reservar-recurso', function () {
     return view('reservar-recurso');
+});
+
+Route::post("/inserir-usuario", "UsuarioController@cadastrarUsuario");
+
+Route::get('/teste', function () {
+            $usuario = new Usuario;
+            $usuario->nome = 'Teste';
+            $usuario->login = 'Teste';
+            $usuario->senha = 'Teste';
+            $usuario->tipo = 'C';
+            $usuario->save();
 });

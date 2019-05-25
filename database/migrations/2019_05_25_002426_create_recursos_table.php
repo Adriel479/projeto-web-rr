@@ -13,12 +13,12 @@ class CreateRecursosTable extends Migration
      */
     public function up()
     {
-        Schema::create('recurso', function (Blueprint $table) {
+        Schema::create('recursos', function (Blueprint $table) {
             $table->increments('id_recurso');
-            $table->string('nome_recurso');
-            $table->string('quantidade_recurso');
-            $table->string('descricao_recurso');
-            $table->primary('id_recurso');
+            $table->string('nome_recurso', 45);
+            $table->string('descricao_recurso',45);
+            $table->integer('quantidade_recurso');
+            $table->timestamps();
         });
     }
 
@@ -29,6 +29,6 @@ class CreateRecursosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('recurso');
+        Schema::dropIfExists('recursos');
     }
 }

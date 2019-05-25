@@ -18,15 +18,20 @@
         </nav>
        <section class="container">
             <header>
+                <?php 
+                    if (session()->has('estado') && session('estado') == 'usuario_cadastrado')
+                        echo "<p class='alert alert-success' role='alert'>Cadastrado com sucesso!</p>";
+                ?>
                 <h1>Cadastro de usuário</h1>
             </header>
-            <form action="" method="">
+            <form action="inserir-usuario" method="post">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
                 <label>Nome:</label>
                 <input type="text" class="form-control" name="nome_usuario" placeholder="Nome Completo"/>
                 <label>Usuário:</label>
                 <input type="text" class="form-control" name="login_usuario" placeholder="Usuário"/>
                 <label>Senha:</label>
-                <input type="password" class="form-control" name="senha" placeholder="Senha"/><br/>
+                <input type="password" class="form-control" name="senha_usuario" placeholder="Senha"/><br/>
                 <input type="submit" class="btn btn-success form-control" value="Cadastrar"/><br/>
             </form> 
        </section>
