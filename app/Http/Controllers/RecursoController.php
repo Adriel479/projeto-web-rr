@@ -23,7 +23,7 @@ class RecursoController extends Controller
     }
 
     public function removerRecurso(Request $request) {
-        if (session()->has('login')) {
+        if (session()->has('login') && session()->get('login')['tipo'] == 'A') {
             Reserva::where('id_recurso', $request->id_recurso)->delete();
             Recurso::where('id_recurso', $request->id_recurso)->delete();
             return view('/gerenciar-recurso', ['mensagem'=>'Removido com sucesso!']);
@@ -34,7 +34,7 @@ class RecursoController extends Controller
     }
 
     public function atualizarRecurso(Request $request) {
-        if (session()->has('login')) {
+        if (session()->has('login') && session()->get('login')['tipo'] == 'A') {
             $recurso = array(
                 'nome_recurso' => $request->nome_recurso, 
                 'descricao_recurso' => $request->descricao_recurso,

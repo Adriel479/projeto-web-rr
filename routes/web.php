@@ -85,7 +85,7 @@ Route::get('/sair', function() {
 });
 
 Route::get('/gerenciar-admin', function() {
-    if (session()->has('login')) {
+    if (session()->has('login') && session()->get('login')['tipo'] == 'A') {
         $usuarios = Usuario::all('id_usuario', 'nome_usuario', 'tipo_usuario');
         return view('gerenciar-admin', ['usuario'=>$usuarios]);
     } else {
@@ -104,7 +104,7 @@ Route::post("/autenticar-usuario", "LoginController@autenticarUsuario");
 
 Route::post("/editar-recurso", function(Request $request){
     
-    if (session()->has('login')) {
+    if (session()->has('login') && session()->get('login')['tipo'] == 'A') {
         $recurso = Recurso::where('id_recurso', $request->id_recurso)->get();
         return view('editar-recurso', ['recurso' => $recurso[0]] );
     } else {

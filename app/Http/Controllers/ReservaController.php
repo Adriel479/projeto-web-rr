@@ -10,7 +10,7 @@ use App\Recurso;
 class ReservaController extends Controller
 {
     public function cadastrarReserva(Recurso $recurso, Request $request) {
-        if (session()->has('login') && session()->has('login')) {
+        if (session()->has('login')) {
             $reserva = new Reserva;
             $reserva->data_reserva = $request->data_recurso;
             $reserva->id_usuario = strval(session()->get('login')['id']);

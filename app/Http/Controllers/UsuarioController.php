@@ -18,7 +18,7 @@ class UsuarioController extends Controller
     }
 
     public function alterarPermissao(Request $request) {
-        if (session()->has('login')) {
+        if (session()->has('login') && session()->get('login')['tipo'] == 'A') {
             if (strval($request->tipo_usuario) == strval('U')) {
                 Usuario::where('id_usuario', $request->id_usuario)->update(array('tipo_usuario'=>'A'));
             } else {
