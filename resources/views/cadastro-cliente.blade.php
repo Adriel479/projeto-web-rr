@@ -5,12 +5,12 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link rel="stylesheet" href="{{ asset('css/estilo-login-cadastro.css')}}"/>
-        <title>Cadastro</title>
+        <link rel="stylesheet" href="{{ asset('css/estilo-zero.css')}}"/>
+        <title>Cadastro de Usuários</title>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="{{url('/')}}">RR - System </a>
+        <a class="navbar-brand" href="">RR - Sys </a>
             <ul class="navbar-nav">
                 <li class="nav-item"><a class="nav-link" href="{{url('/login')}}">Login</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{url('/cadastro-cliente')}}">Cadastro</a></li>
@@ -22,6 +22,10 @@
                     if (session()->has('estado') && session('estado') == 'usuario_cadastrado') {
                         echo "<p class='alert alert-success' role='alert'>Cadastrado com sucesso!</p>";
                         session()->forget('estado');
+                    }
+
+                    if (isset($campos_vazios)) {
+                        echo "<p class='alert alert-danger' role='alert'>" . $campos_vazios ."</p>";
                     }
                 ?>
                 <h1>Cadastro de usuário</h1>

@@ -5,12 +5,12 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link rel="stylesheet" href="{{ asset('css/estilo-login-cadastro.css')}}"/>
-        <title>Cadastro</title>
+        <link rel="stylesheet" href="{{ asset('css/estilo-um.css')}}"/>
+        <title>Listagem de Recursos</title>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="{{url('/')}}">RR - System </a>
+            <a class="navbar-brand" href="">RR - Sys </a>
             <ul class="navbar-nav">
                 <?php 
                     $sessao = session()->get('login');

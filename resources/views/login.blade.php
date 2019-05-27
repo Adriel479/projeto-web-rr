@@ -5,12 +5,12 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link rel="stylesheet" href="{{ asset('css/estilo-login-cadastro.css')}}"/>
+        <link rel="stylesheet" href="{{ asset('css/estilo-zero.css')}}"/>
         <title>Login</title>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="{{url('')}}">RR - System </a>
+            <a class="navbar-brand" href="">RR - Sys </a>
             <ul class="navbar-nav">
                 <li class="nav-item"><a class="nav-link" href="{{url('/login')}}">Login</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{url('/cadastro-cliente')}}">Cadastro</a></li>
@@ -21,7 +21,14 @@
                 <?php 
                     if (session()->has('falha_login')) {
                         echo "<p class='alert alert-danger'>" . session('falha_login') . "</p>";
+                        session()->forget('falha_login');
                     }
+
+                    if (session()->has('permissao')) {
+                        echo "<p class='alert alert-success'>" . session()->get('permissao') . "</p>";
+                        session()->forget('permissao');
+                    }
+
                 ?>
                 <h1>Login</h1>
                 <p>Seja bem-vindo ao sistema de reserva de recursos acesse o sistema com seu login e senha!</p>
