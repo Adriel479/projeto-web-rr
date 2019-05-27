@@ -17,7 +17,7 @@
                     if (session()->has('login') && session()->get('login')['tipo'] == 'A') {
                         echo "<li class='nav-item'><a class='nav-link' href='/cadastro-recurso'>Cadastrar Recurso</a></li>";
                         echo "<li class='nav-item'><a class='nav-link' href='/gerenciar-recurso'>Gerenciar Recursos</a></li>";
-                        echo "<li class='nav-item'><a class='nav-link' href=''>Gerenciar Administradores</a></li>";
+                        echo "<li class='nav-item'><a class='nav-link' href='/gerenciar-admin'>Gerenciar Administradores</a></li>";
                     }
                     echo "<li class='nav-item'><a class='nav-link' href='/listar-recurso'>Listar Recursos</a></li>";
                     echo "<li class='nav-item'><a class='nav-link' href='/sair'>Sair</a></li>";
@@ -26,30 +26,25 @@
         </nav>
        <section class="container">
             <header>
-                <h1>Lista de recursos</h1>
+                <h1>Lista de usuários</h1>
             </header>
             <table class="table">
                 <th>Código</th>
                 <th>Nome</th>
-                <th>Descrição</th>
-                <th>Quantidade</th>
-                <th>Editar</th>
-                <th>Excluir</th>
+                <th>tipo</th>
+                <th>Alterar</th>
                 <?php
-
                     if (isset($mensagem)) {
                         echo "<p class='alert alert-warning'>" . $mensagem . "</p>";
                     }
 
-                    if(isset($recurso)) {
-                        foreach($recurso as $item) {
+                    if(isset($usuario)) {
+                        foreach($usuario as $item) {
                             echo "<tr>";
-                                echo "<td>" . $item['id_recurso'] . "</td>";
-                                echo "<td>" . $item['nome_recurso'] . "</td>";
-                                echo "<td>" . $item['descricao_recurso'] . "</td>";
-                                echo "<td>" . $item['quantidade_recurso'] . "</td>";
-                                echo "<td><form action='/editar-recurso' method='post'><input type='hidden' name='_token' value='" . csrf_token() . "'/><input hidden name='id_recurso' value='" . $item['id_recurso'] .  "'/><input type='submit' class='btn btn-primary' value='Editar'/></form></td>";
-                                echo "<td><form action='/remover-recurso' method='post'><input type='hidden' name='_token' value='" . csrf_token() . "'/><input hidden name='id_recurso' value='" . $item['id_recurso'] .  "'/><input type='submit' class='btn btn-danger' value='Remover'/></form></td>";
+                                echo "<td>" . $item['id_usuario'] . "</td>";
+                                echo "<td>" . $item['nome_usuario'] . "</td>";
+                                echo "<td>" . $item['tipo_usuario'] . "</td>";
+                                echo "<td><form action='/tipo-usuario' method='post'><input type='hidden' name='_token' value='" . csrf_token() . "'/><input type='text' name='tipo_usuario' hidden value='".$item['tipo_usuario']."'/><input hidden name='id_recurso' value='" . $item['id_usuario'] .  "'/><input type='submit' class='btn btn-primary' value='Alterar'/></form></td>";
                             echo "</tr>";
                         }
                     }

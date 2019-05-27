@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Recurso;
 use App\Mensagem;
+use App\Reserva;
 
 class RecursoController extends Controller
 {
@@ -20,4 +21,31 @@ class RecursoController extends Controller
             return view('aviso');
         }
     }
+
+    public function removerRecurso(Request $request) {
+        if (session()->has('login')) {
+            Reserva::where('id_recurso', $request->id_recurso)->delete();
+            Recurso::where('id_recurso', $request->id_recurso)->delete();
+            return view('/gerenciar-recurso', ['mensagem'=>'Removido com sucesso!']);
+        } else {
+            return view('aviso');
+        }
+        
+    }
+
+    public function atualizarRecurso(Request $request) {
+        if (session()->has('login')) {
+            $recurso = array(
+                'nome_recurso' => $request->nome_recurso, 
+                'descricao_recurso' => $request->descricao_recurso,
+                'quantidade_recurso' => $request->quantidade_recurso        
+            );
+            $recurso['id_recurso'] = $request->id_recurso;
+            Recurso::where('id_recurso', $request->id_recurso)->update($recurso);
+            return view('/editar-recurso', ['mensagem'=>'Alterado com sucesso!', 'recurso'=>$recurso]);
+        } else {
+            return view('aviso');
+        }
+    }
+
 }

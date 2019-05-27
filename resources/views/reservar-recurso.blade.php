@@ -30,14 +30,33 @@
             <header>
                 <h1>Confirmar reserva</h1>
             </header>
-            <form action="" method="">
-                <input type="text" name="id_recurso" hidden/>
+            <form action="/inserir-reserva" method="post">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+                <input type="text" name="id_recurso" value=<?php echo $dados['id_recurso'];?> hidden/>
                 <label>Nome recurso:</label>
-                <input type="text" class="form-control" name="nome_recurso" disabled/>
+                <input type="text" class="form-control" name="nome_recurso" disabled value='<?php echo $dados['nome_recurso'];?>'/>
                 <label>Descrição:</label>
-                <input type="text" class="form-control" name="descricao_recurso" disabled/><br/>
+                <input type="text" class="form-control" name="descricao_recurso" disabled value='<?php echo $dados['descricao_recurso'];?>'/>
                 <label>Data de reserva:</label>
-                <input type="date" class="form-control" name="data_recurso"><br/>
+                <select name="data_recurso" class="form-control">
+                    <?php
+                        $cont = 0;
+                        $tamanho = 8;
+                        $semana[1] = 'Segunda - feira';
+                        $semana[2] = 'Terça - feira';
+                        $semana[3] = 'Quarta - feira';
+                        $semana[4] = 'Quinta - feira';
+                        $semana[5] = 'Sexta - feira';
+                        while ($cont < $tamanho) {
+                            $data = date('Y-m-d', strtotime('+' . strval($cont) . ' day'));
+                            if (date('w', strtotime($data)) != 0 && date('w', strtotime($data)) != 6)
+                                echo "<option value='" .  $data . "'>" . $data . ' - ' . $semana[date('w', strtotime($data))] . '</option>';
+                            else
+                                $tamanho = $tamanho + 1;
+                            $cont = $cont + 1;
+                        }
+                    ?>
+                </select><br/>
                 <input type="submit" class="btn btn-success form-control" value="Confirmar"/><br/>
             </form> 
        </section>

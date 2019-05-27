@@ -17,4 +17,18 @@ class UsuarioController extends Controller
         return redirect('/cadastro-cliente')->with('estado','usuario_cadastrado');
     }
 
+    public function alterarPermissao(Request $request) {
+        if (session()->has('login')) {
+            if (strval($request->tipo_usuario) == strval('U')) {
+                Usuario::where('id_usuario', $request->id_usuario)->update(array('tipo_usuario'=>'A'));
+            } else {
+                Usuario::where('id_usuario', $request->id_usuario)->update(array('tipo_usuario'=>'U'));
+            }
+            $usuarios = Usuario::all('id_usuario', 'nome_usuario', 'tipo_usuario');
+            return view('gerenciar-admin', ['mensagem'=>'Alterado com sucesso!','usuario' => $usuarios]);
+        } else {
+            return view('aviso');
+        }
+    }
+
 }

@@ -15,6 +15,8 @@ use App\Usuario;
 use App\Mensagem;
 use App\Recurso;
 use App\Reserva;
+use Illuminate\Http\Request;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -36,27 +38,45 @@ Route::get('/cadastro-recurso', function () {
 });
 
 Route::get('/gerenciar-recurso', function () {
-    if (session()->has('login') && session()->get('login')['tipo'] == 'A')
-        return view('gerenciar-recurso');
-    else
+    if (session()->has('login') && session()->get('login')['tipo'] == 'A') {
+        $recurso = Recurso::all();
+        return view('gerenciar-recurso', ['recurso' => $recurso]);
+    } else {
         return view('aviso');
+    }
 });
 
 Route::get('/listar-recurso', function () {
     if (session()->has('login')) {
         $lista_recursos = Recurso::all();
-       // $lista_reservas = Reserva::where('id_usuario', session()->get('login')['id_usuario']);
-        return view('listar-recurso', ['lista_recurso'=>$lista_recursos]);
+        $lista_reservas = Reserva::where('id_usuario', (session()->get('login'))['id'])->get();
+        $dados = array();
+        foreach ($lista_reservas as $item) {
+            $tb = Recurso::where('id_recurso', $item['id_recurso'])->get();
+            if (!empty($tb)) {
+                array_push($dados, 
+                    [
+                        "id" => $tb[0]['id_recurso'],
+                        "nome" => $tb[0]['nome_recurso'],
+                        "descricao" => $tb[0]['descricao_recurso'],
+                        "data" => $item['data_reserva']
+                    ]
+                ); 
+            }
+        }
+        return view('listar-recurso', ['lista_recurso'=>$lista_recursos, 'lista_reserva' => $dados]);
     } else {
         return redirect('login')->with('falha_login', Mensagem::acessoNaoPermitido());
     }
 });
 
-Route::get('/reservar-recurso', function () {
-    if (session()->has('login'))
-        return view('reservar-recurso');
-    else
+Route::post('/reservar-recurso', function (Request $request) {
+    if (session()->has('login')) {
+        $dados = Recurso::where('id_recurso', $request->id_recurso)->get();
+        return view('reservar-recurso', ['dados' => $dados[0]] );
+    } else {
         return view('aviso');
+    }
 });
 
 Route::get('/sair', function() {
@@ -64,8 +84,36 @@ Route::get('/sair', function() {
     return redirect('/login');
 });
 
+Route::get('/gerenciar-admin', function() {
+    if (session()->has('login')) {
+        $usuarios = Usuario::all('id_usuario', 'nome_usuario', 'tipo_usuario');
+        return view('gerenciar-admin', ['usuario'=>$usuarios]);
+    } else {
+        return view('aviso');
+    }
+    
+});
+
 Route::post("/inserir-usuario", "UsuarioController@cadastrarUsuario");
 
 Route::post("/inserir-recurso", "RecursoController@cadastrarRecurso");
 
+Route::post('/inserir-reserva', 'ReservaController@cadastrarReserva');
+
 Route::post("/autenticar-usuario", "LoginController@autenticarUsuario");
+
+Route::post("/editar-recurso", function(Request $request){
+    
+    if (session()->has('login')) {
+        $recurso = Recurso::where('id_recurso', $request->id_recurso)->get();
+        return view('editar-recurso', ['recurso' => $recurso[0]] );
+    } else {
+        return view('aviso');
+    }
+});
+
+Route::post("/remover-recurso", "RecursoController@removerRecurso");
+
+Route::post("/atualizar-recurso", "RecursoController@atualizarRecurso");
+
+Route::post("/tipo-usuario", "UsuarioController@alterarPermissao");

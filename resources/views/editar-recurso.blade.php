@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="{{ asset('css/estilo-login-cadastro.css')}}"/>
-        <title>Cadastro</title>
+        <title>Editar Recurso</title>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -26,35 +26,26 @@
         </nav>
        <section class="container">
             <header>
-                <h1>Lista de recursos</h1>
-            </header>
-            <table class="table">
-                <th>Código</th>
-                <th>Nome</th>
-                <th>Descrição</th>
-                <th>Quantidade</th>
-                <th>Editar</th>
-                <th>Excluir</th>
                 <?php
-
                     if (isset($mensagem)) {
-                        echo "<p class='alert alert-warning'>" . $mensagem . "</p>";
-                    }
-
-                    if(isset($recurso)) {
-                        foreach($recurso as $item) {
-                            echo "<tr>";
-                                echo "<td>" . $item['id_recurso'] . "</td>";
-                                echo "<td>" . $item['nome_recurso'] . "</td>";
-                                echo "<td>" . $item['descricao_recurso'] . "</td>";
-                                echo "<td>" . $item['quantidade_recurso'] . "</td>";
-                                echo "<td><form action='/editar-recurso' method='post'><input type='hidden' name='_token' value='" . csrf_token() . "'/><input hidden name='id_recurso' value='" . $item['id_recurso'] .  "'/><input type='submit' class='btn btn-primary' value='Editar'/></form></td>";
-                                echo "<td><form action='/remover-recurso' method='post'><input type='hidden' name='_token' value='" . csrf_token() . "'/><input hidden name='id_recurso' value='" . $item['id_recurso'] .  "'/><input type='submit' class='btn btn-danger' value='Remover'/></form></td>";
-                            echo "</tr>";
-                        }
+                        echo "<p class='alert alert-warning'>" . $mensagem. "</p>";
                     }
                 ?>
-            </table>
+                <h1>Editar Recurso</h1>
+            </header>
+            <form action="/atualizar-recurso" method="post">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+                <?php
+                    echo "<input type='text' name='id_recurso' value='" . $recurso['id_recurso'] . "'hidden/>";
+                    echo "<label>Nome:</label>";
+                    echo "<input type='text' class='form-control' name='nome_recurso' placeholder='Nome' value='" . $recurso['nome_recurso'] . "'/>";
+                    echo "<label>Descrição:</label>";
+                    echo "<input type='text' class='form-control' name='descricao_recurso' placeholder='Descrição' value='" . $recurso['descricao_recurso'] . "'/>";
+                    echo "<label>Quantidade:</label>";
+                    echo "<input type='number' class='form-control' name='quantidade_recurso' value='" . $recurso['quantidade_recurso'] . "'/><br/>"
+                ?>
+                <input type="submit" class="btn btn-success form-control" value="Salvar"/><br/>
+            </form> 
        </section>
     </body>
 </html>

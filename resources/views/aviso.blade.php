@@ -13,7 +13,7 @@
             <h1 class="alert alert-danger">
                 Você não possui permissão para acessar essa página!
             </h1>
-            <a href="/listar-recurso" class="btn btn-success">CLique aqui para voltar</a>
+            <a href="/listar-recurso" class="btn btn-success">Voltar</a>
        </section>
     </body>
 </html>

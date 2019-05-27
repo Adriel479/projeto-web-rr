@@ -27,8 +27,10 @@
        <section class="container">
             <header>
                 <?php
-                    if (session()->has('estado'))
+                    if (session()->has('estado')) {
                         echo "<p class='alert alert-success'>" . session('estado') . "</p>";
+                        session()->forget('estado');
+                    }
                 ?>
                 <h1>Cadastro de Recurso</h1>
             </header>

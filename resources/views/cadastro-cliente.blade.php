@@ -19,8 +19,10 @@
        <section class="container">
             <header>
                 <?php 
-                    if (session()->has('estado') && session('estado') == 'usuario_cadastrado')
+                    if (session()->has('estado') && session('estado') == 'usuario_cadastrado') {
                         echo "<p class='alert alert-success' role='alert'>Cadastrado com sucesso!</p>";
+                        session()->forget('estado');
+                    }
                 ?>
                 <h1>Cadastro de usuário</h1>
             </header>

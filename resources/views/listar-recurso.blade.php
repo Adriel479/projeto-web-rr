@@ -17,7 +17,7 @@
                     if (session()->has('login') && session()->get('login')['tipo'] == 'A') {
                         echo "<li class='nav-item'><a class='nav-link' href='/cadastro-recurso'>Cadastrar Recurso</a></li>";
                         echo "<li class='nav-item'><a class='nav-link' href='/gerenciar-recurso'>Gerenciar Recursos</a></li>";
-                        echo "<li class='nav-item'><a class='nav-link' href=''>Gerenciar Administradores</a></li>";
+                        echo "<li class='nav-item'><a class='nav-link' href='/gerenciar-admin'>Gerenciar Administradores</a></li>";
                     }
                     echo "<li class='nav-item'><a class='nav-link' href='/listar-recurso'>Listar Recursos</a></li>";
                     echo "<li class='nav-item'><a class='nav-link' href='/sair'>Sair</a></li>";
@@ -27,6 +27,12 @@
 
         <section class="container">
             <header>
+                <?php
+                    if (session()->has('estado')) {
+                        echo "<p class='alert alert-success'>" . session()->get('estado') ."</p>";
+                        session()->forget('estado');
+                    }
+                    ?>
                 <h1>Minhas Reservas</h1>
             </header>
             <table class="table">
@@ -35,14 +41,21 @@
                 <th>Descrição</th>
                 <th>Data</th>
                 <?php
-                
+                    foreach($lista_reserva as $item) {
+                        echo "<tr>";
+                            echo "<td>" . $item['id'] . "</td>";
+                            echo "<td>" . $item['nome'] . "</td>";
+                            echo "<td>" . $item['descricao'] . "</td>";
+                            echo "<td>" . $item['data'] . "</td>";
+                        echo "</tr>";
+                    }
                 ?>
             </table>
        </section>
 
        <section class="container">
             <header>
-                <h1>Lista de reservas</h1>
+                <h1>Lista de recursos</h1>
             </header>
             <table class="table">
                 <th>Código</th>
@@ -53,13 +66,15 @@
                 <?php
                   //  var_dump(session()->get('lista_de_recursos'));
                     foreach($lista_recurso as $itens) {
-                        echo '<tr>';
-                            echo '<td>' . $itens['id_recurso'] . '</td>';
-                            echo '<td>' . $itens['nome_recurso'] . '</td>';
-                            echo '<td>' . $itens['descricao_recurso'] . '</td>';
-                            echo '<td>' . $itens['quantidade_recurso'] . '</td>';
-                            echo "<td><form action='/reservar-recurso' method='post'><input hidden name='id_recurso' value=" . $itens['id_recurso'] .  "><input type='submit' class='btn btn-success' value='Reserva'/></form></td>";
-                        echo '</tr>';
+                        if ($itens['quantidade_recurso'] > 0) {
+                            echo '<tr>';
+                                echo '<td>' . $itens['id_recurso'] . '</td>';
+                                echo '<td>' . $itens['nome_recurso'] . '</td>';
+                                echo '<td>' . $itens['descricao_recurso'] . '</td>';
+                                echo '<td>' . $itens['quantidade_recurso'] . '</td>';
+                                echo "<td><form action='/reservar-recurso' method='post'><input type='hidden' name='_token' value='" . csrf_token() . "'/><input hidden name='id_recurso' value='" . $itens['id_recurso'] .  "'/><input type='submit' class='btn btn-success' value='Reservar'/></form></td>";
+                            echo '</tr>';
+                        }
                     }
                 ?>
             </table>
