@@ -17,7 +17,6 @@ class CreateRecursosTable extends Migration
             $table->increments('id_recurso');
             $table->string('nome_recurso', 45);
             $table->string('descricao_recurso',45);
-            $table->integer('quantidade_recurso');
             $table->timestamps();
         });
     }

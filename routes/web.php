@@ -52,6 +52,8 @@ Route::get('/listar-recurso', function () {
         $lista_reservas = Reserva::where('id_usuario', (session()->get('login'))['id'])
                         ->where('estado_reserva', 'U')->get();
         
+        $reservas = Reserva::all();
+
         $usando = DB::table('recursos')
             ->join('reservas', 'recursos.id_recurso', '=', 'reservas.id_recurso')
             ->where('reservas.estado_reserva', '=', 'U')

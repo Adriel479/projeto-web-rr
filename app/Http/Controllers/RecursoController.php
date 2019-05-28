@@ -14,7 +14,7 @@ class RecursoController extends Controller
             $recurso = new Recurso;
             $recurso->nome_recurso = strval($request->nome_recurso);
             $recurso->descricao_recurso = strval($request->descricao_recurso);
-            $recurso->quantidade_recurso = $request->quantidade_recurso;
+           // $recurso->quantidade_recurso = $request->quantidade_recurso;
             $recurso->save();
             return redirect('/cadastro-recurso')->with('estado', Mensagem::cadastradoComSucesso());
         } else {
