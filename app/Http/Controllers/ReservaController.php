@@ -17,9 +17,6 @@ class ReservaController extends Controller
             $reserva->id_recurso = $request->id_recurso;
             $reserva->estado_reserva = 'U';
             $reserva->save();
-            $ret = Recurso::where('id_recurso', $request->id_recurso)->get();
-            $qtd =  ((int)($ret[0]['quantidade_recurso'])) - 1;
-            Recurso::where('id_recurso', $request->id_recurso)->update(array('quantidade_recurso' => $qtd));
             return redirect('/listar-recurso')->with('estado', Mensagem::cadastradoComSucesso());
         } else {
             return view('aviso');

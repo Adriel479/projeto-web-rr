@@ -61,7 +61,6 @@
                 <th>Código</th>
                 <th>Nome</th>
                 <th>Descrição</th>
-                <th>Quantidade</th>
                 <th>Reservar</th>
                 <?php
                   //  var_dump(session()->get('lista_de_recursos'));
