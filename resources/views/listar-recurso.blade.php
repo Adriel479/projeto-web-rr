@@ -66,15 +66,14 @@
                 <?php
                   //  var_dump(session()->get('lista_de_recursos'));
                     foreach($lista_recurso as $itens) {
-                        if ($itens['quantidade_recurso'] > 0) {
+
                             echo '<tr>';
                                 echo '<td>' . $itens['id_recurso'] . '</td>';
                                 echo '<td>' . $itens['nome_recurso'] . '</td>';
                                 echo '<td>' . $itens['descricao_recurso'] . '</td>';
-                                echo '<td>' . $itens['quantidade_recurso'] . '</td>';
                                 echo "<td><form action='/reservar-recurso' method='post'><input type='hidden' name='_token' value='" . csrf_token() . "'/><input hidden name='id_recurso' value='" . $itens['id_recurso'] .  "'/><input type='submit' class='btn btn-success' value='Reservar'/></form></td>";
                             echo '</tr>';
-                        }
+                        
                     }
                 ?>
             </table>

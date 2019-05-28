@@ -49,7 +49,35 @@ Route::get('/gerenciar-recurso', function () {
 Route::get('/listar-recurso', function () {
     if (session()->has('login')) {
         $lista_recursos = Recurso::all();
-        $lista_reservas = Reserva::where('id_usuario', (session()->get('login'))['id'])->get();
+        $lista_reservas = Reserva::where('id_usuario', (session()->get('login'))['id'])
+                        ->where('estado_reserva', 'U')->get();
+        
+        $usando = DB::table('recursos')
+            ->join('reservas', 'recursos.id_recurso', '=', 'reservas.id_recurso')
+            ->where('reservas.estado_reserva', '=', 'U')
+            ->get();
+        
+        $recursos = array();
+        foreach($lista_recursos as $rr) {
+            $estado = 0;
+            foreach ($usando as $uu) {
+                if ($rr['id_recurso'] == $uu['id_recurso']) {
+                    $estado = 1;
+                    break;
+                }
+            }
+            if ($estado == 0)
+                array_push($recursos, $rr);
+        }
+
+        foreach ($reservas as $r) {
+            $data_reserva = date('Y-m-d', strtotime($r['data_reserva']));
+            $data_hoje = time();
+            if ($data_reserva < $data_hoje && $r['estado_reserva'] != 'U') {
+                Reserva::where('id_reserva', $r['id_reserva'])->update(['estado_reserva'=>'D']);
+            }
+        }
+
         $dados = array();
         foreach ($lista_reservas as $item) {
             $tb = Recurso::where('id_recurso', $item['id_recurso'])->get();
@@ -64,7 +92,7 @@ Route::get('/listar-recurso', function () {
                 ); 
             }
         }
-        return view('listar-recurso', ['lista_recurso'=>$lista_recursos, 'lista_reserva' => $dados]);
+        return view('listar-recurso', ['lista_recurso'=>$recursos, 'lista_reserva' => $dados]);
     } else {
         return redirect('login')->with('falha_login', Mensagem::acessoNaoPermitido());
     }

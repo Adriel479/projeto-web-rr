@@ -47,7 +47,6 @@
                                 echo "<td>" . $item['id_recurso'] . "</td>";
                                 echo "<td>" . $item['nome_recurso'] . "</td>";
                                 echo "<td>" . $item['descricao_recurso'] . "</td>";
-                                echo "<td>" . $item['quantidade_recurso'] . "</td>";
                                 echo "<td><form action='/editar-recurso' method='post'><input type='hidden' name='_token' value='" . csrf_token() . "'/><input hidden name='id_recurso' value='" . $item['id_recurso'] .  "'/><input type='submit' class='btn btn-primary' value='Editar'/></form></td>";
                                 echo "<td><form action='/remover-recurso' method='post'><input type='hidden' name='_token' value='" . csrf_token() . "'/><input hidden name='id_recurso' value='" . $item['id_recurso'] .  "'/><input type='submit' class='btn btn-danger' value='Remover'/></form></td>";
                             echo "</tr>";

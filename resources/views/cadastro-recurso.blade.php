@@ -40,8 +40,6 @@
                 <input type="text" class="form-control" name="nome_recurso" placeholder="Nome"/>
                 <label>Descrição:</label>
                 <input type="text" class="form-control" name="descricao_recurso" placeholder="Descrição"/>
-                <label>Quantidade:</label>
-                <input type="number" class="form-control" name="quantidade_recurso"/><br/>
                 <input type="submit" class="btn btn-success form-control" value="Cadastrar"/><br/>
             </form> 
        </section>
