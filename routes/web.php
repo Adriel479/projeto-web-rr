@@ -54,16 +54,17 @@ Route::get('/listar-recurso', function () {
         
         $reservas = Reserva::all();
 
-        $usando = DB::table('recursos')
+        $usando =  DB::table('recursos')
             ->join('reservas', 'recursos.id_recurso', '=', 'reservas.id_recurso')
             ->where('reservas.estado_reserva', '=', 'U')
             ->get();
-        
+        //return $usando;
         $recursos = array();
         foreach($lista_recursos as $rr) {
             $estado = 0;
             foreach ($usando as $uu) {
-                if ($rr['id_recurso'] == $uu['id_recurso']) {
+                //return $uu;
+                if ($rr['id_recurso'] == $uu->id_usuario) {
                     $estado = 1;
                     break;
                 }
