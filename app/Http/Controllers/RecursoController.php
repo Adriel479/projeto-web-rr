@@ -11,6 +11,8 @@ class RecursoController extends Controller
 {
     public function cadastrarRecurso (Request $request) {
         if (session()->has('login') && session()->get('login')['tipo'] == 'A') {
+            if (empty($request->nome_recurso) || empty($request->descricao_recurso)) 
+                return redirect('/cadastro-recurso')->with('campos_vazios', '.');
             $recurso = new Recurso;
             $recurso->nome_recurso = strval($request->nome_recurso);
             $recurso->descricao_recurso = strval($request->descricao_recurso);

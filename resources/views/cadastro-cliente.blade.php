@@ -24,9 +24,16 @@
                         session()->forget('estado');
                     }
 
-                    if (isset($campos_vazios)) {
-                        echo "<p class='alert alert-danger' role='alert'>" . $campos_vazios ."</p>";
+                    if (session()->has('campos_vazios')) {
+                        echo "<p class='alert alert-danger' role='alert'>Todos os campos são obrigatórios!</p>";
+                        session()->forget('campos_vazios');
                     }
+
+                    if (session()->has('login_existente')) {
+                        echo "<p class='alert alert-danger' role='alert'>Já existe um usuário com esse Login!</p>";
+                        session()->forget('login_existente');
+                    }
+
                 ?>
                 <h1>Cadastro de usuário</h1>
             </header>

@@ -31,6 +31,12 @@
                         echo "<p class='alert alert-success'>" . session('estado') . "</p>";
                         session()->forget('estado');
                     }
+
+
+                    if (session()->has('campos_vazios')) {
+                        echo "<p class='alert alert-danger' role='alert'>Todos os campos são obrigatórios!</p>";
+                        session()->forget('campos_vazios');
+                    }
                 ?>
                 <h1>Cadastro de Recurso</h1>
             </header>
@@ -39,7 +45,7 @@
                 <label>Nome:</label>
                 <input type="text" class="form-control" name="nome_recurso" placeholder="Nome"/>
                 <label>Descrição:</label>
-                <input type="text" class="form-control" name="descricao_recurso" placeholder="Descrição"/>
+                <input type="text" class="form-control" name="descricao_recurso" placeholder="Descrição"/><br/>
                 <input type="submit" class="btn btn-success form-control" value="Cadastrar"/><br/>
             </form> 
        </section>

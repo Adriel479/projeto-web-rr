@@ -8,14 +8,25 @@ use App\Usuario;
 class UsuarioController extends Controller
 {
     public function cadastrarUsuario(Request $request) {
-            $usuario = new Usuario;
-            $usuario->nome_usuario = $request->nome_usuario;
-            $usuario->login_usuario = $request->login_usuario;
-            $usuario->senha_usuario = $request->senha_usuario;
-            $usuario->tipo_usuario = 'U';
-            $usuario->save();
-            return redirect('/cadastro-cliente')->with('estado','usuario_cadastrado');
-        
+            if (empty($request->nome_usuario) || empty($request->login_usuario)
+            || empty($request->senha_usuario)) {
+                return redirect('/cadastro-cliente')
+                ->with('campos_vazios', '.');
+            } else {
+
+                $usuario = Usuario::where('login_usuario', $request->login_usuario)->get();
+
+                if (!empty($usuario))
+                    return redirect('/cadastro-cliente')->with('login_existente', '.');
+
+                $usuario = new Usuario;
+                $usuario->nome_usuario = $request->nome_usuario;
+                $usuario->login_usuario = $request->login_usuario;
+                $usuario->senha_usuario = $request->senha_usuario;
+                $usuario->tipo_usuario = 'U';
+                $usuario->save();
+                return redirect('/cadastro-cliente')->with('estado','usuario_cadastrado');
+            }
     }
 
     public function alterarPermissao(Request $request) {
