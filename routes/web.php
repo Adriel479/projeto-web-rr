@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
 
 
 Route::get('/', function () {
-    return view('login');
+    return redirect('login');
 });
 
 Route::get('/login', function () {
