@@ -32,7 +32,6 @@
                 <th>Código</th>
                 <th>Nome</th>
                 <th>Descrição</th>
-                <th>Quantidade</th>
                 <th>Editar</th>
                 <th>Excluir</th>
                 <?php

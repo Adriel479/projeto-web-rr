@@ -64,7 +64,7 @@ Route::get('/listar-recurso', function () {
             $estado = 0;
             foreach ($usando as $uu) {
                 //return $uu;
-                if ($rr['id_recurso'] == $uu->id_usuario) {
+                if ($rr['id_recurso'] == $uu->id_recurso) {
                     $estado = 1;
                     break;
                 }
