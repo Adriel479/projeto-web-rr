@@ -16,7 +16,7 @@ class UsuarioController extends Controller
 
                 $usuario = Usuario::where('login_usuario', $request->login_usuario)->get();
 
-                if (!empty($usuario))
+                if (strval($usuario) != "[]")
                     return redirect('/cadastro-cliente')->with('login_existente', '.');
 
                 $usuario = new Usuario;
