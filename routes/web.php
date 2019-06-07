@@ -54,6 +54,17 @@ Route::get('/listar-recurso', function () {
         
         $reservas = Reserva::all();
 
+        foreach ($reservas as $r) {
+            $data_reserva = strtotime(date('Y-m-d', strtotime($r['data_reserva'])));
+            $data_hoje = strtotime(date('Y-m-d',time()));;
+            //return [$data_hoje, $data_reserva];
+            if ($data_reserva < $data_hoje && $r['estado_reserva'] == 'U') {
+                Reserva::where('id_reserva', $r['id_reserva'])->update(['estado_reserva'=>'D']);
+            }
+        }
+        
+        $reservas = Reserva::all();
+
         $usando =  DB::table('recursos')
             ->join('reservas', 'recursos.id_recurso', '=', 'reservas.id_recurso')
             ->where('reservas.estado_reserva', '=', 'U')
@@ -73,13 +84,7 @@ Route::get('/listar-recurso', function () {
                 array_push($recursos, $rr);
         }
 
-        foreach ($reservas as $r) {
-            $data_reserva = date('Y-m-d', strtotime($r['data_reserva']));
-            $data_hoje = time();
-            if ($data_reserva < $data_hoje && $r['estado_reserva'] != 'U') {
-                Reserva::where('id_reserva', $r['id_reserva'])->update(['estado_reserva'=>'D']);
-            }
-        }
+       
 
         $dados = array();
         foreach ($lista_reservas as $item) {
