@@ -41,9 +41,8 @@
                     echo "<input type='text' class='form-control' name='nome_recurso' placeholder='Nome' value='" . $recurso['nome_recurso'] . "'/>";
                     echo "<label>Descrição:</label>";
                     echo "<input type='text' class='form-control' name='descricao_recurso' placeholder='Descrição' value='" . $recurso['descricao_recurso'] . "'/>";
-                    echo "<label>Quantidade:</label>";
-                    echo "<input type='number' class='form-control' name='quantidade_recurso' value='" . $recurso['quantidade_recurso'] . "'/><br/>"
                 ?>
+                <br/>
                 <input type="submit" class="btn btn-success form-control" value="Salvar"/><br/>
             </form> 
        </section>

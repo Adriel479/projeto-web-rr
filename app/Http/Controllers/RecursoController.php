@@ -16,7 +16,6 @@ class RecursoController extends Controller
             $recurso = new Recurso;
             $recurso->nome_recurso = strval($request->nome_recurso);
             $recurso->descricao_recurso = strval($request->descricao_recurso);
-           // $recurso->quantidade_recurso = $request->quantidade_recurso;
             $recurso->save();
             return redirect('/cadastro-recurso')->with('estado', Mensagem::cadastradoComSucesso());
         } else {
@@ -40,7 +39,6 @@ class RecursoController extends Controller
             $recurso = array(
                 'nome_recurso' => $request->nome_recurso, 
                 'descricao_recurso' => $request->descricao_recurso,
-                'quantidade_recurso' => $request->quantidade_recurso        
             );
             $recurso['id_recurso'] = $request->id_recurso;
             Recurso::where('id_recurso', $request->id_recurso)->update($recurso);
